@@ -16,42 +16,42 @@ $(document).ready(function(){
 
   $('.new').click(function() {
     game = new Game();
-    $('#feedback').text('Make your Guess!');
-    $('#count').text(game.totalGuesses);
-    $('#guessList').html('');
-    $('#userGuess').val('');
     console.log("The number to guess is: " + game.secretNumber);
   });
 
   $('#guessButton').click(function(e) {
     e.preventDefault();
     var userGuess = parseInt(userInput.value);
-    var result = game.guess(userGuess);
+    var result = game.validateGuess(userGuess);
     $('#feedback').text(result);
     $('#guessList').prepend('<li>' + game.currentGuess + '</li>');
     $('#count').text(game.totalGuesses);
     $('#userGuess').val('');
-    console.log(game.distance);
   });
 });
 
 function Game() {
+  // set up a new game
   this.secretNumber = Math.floor(Math.random() * (100 - 1)) + 1;
   this.currentGuess = 0;
   this.totalGuesses = 0;
   this.distance = 0;
+  $('#feedback').text('Make your Guess!');
+  $('#count').text(this.totalGuesses);
+  $('#guessList').html('');
+  $('#userGuess').val('').focus();
 }
 
-Game.prototype.guess = function(guess) {
+Game.prototype.validateGuess = function(guess) {
   var result;
   // provided we have an actual number continue
   if (typeof guess === 'number') {
-    // if its a correct guess, congratulate
+    // check if it's a correct guess early, and if so congratulate
     if (guess === this.secretNumber) {
       result = "You Got It!!! The number was " + this.secretNumber;
     // check its between 1 and 100 and if so process number
     } else if (guess >= 1 && guess <= 100) {      
-      result = this.findDistance(guess);
+      result = this.giveFeedback(guess);
     // else provide feedback
     } else {
       result = "Your guess needs to be between 1 and 100";
@@ -67,17 +67,33 @@ Game.prototype.guess = function(guess) {
   return result;
 }
 
-Game.prototype.findDistance = function(guess) {
+Game.prototype.giveFeedback = function(guess) {
   var result;
   // check this isn't the first guess
   if (this.distance > 0) {
     var currentDistance = Math.abs(guess - this.secretNumber);
-    if (currentDistance > this.distance) {
+    // see if they've already guessed this
+    $('#guessList li').each(function() {
+      var prevGuess = parseInt($(this).text());
+      if (prevGuess === guess) {
+        result = "You've already had that number";
+        return;
+      }
+    });
+    // if they've already had this number
+    if (result === "You've already had that number") {
+      return result;
+    // if there equidistant from the answer to their previous guess
+    } else if (currentDistance === this.distance) {
+      result = "OOOO! Equidistant!!!"
+    // else if further away...
+    } else if (currentDistance > this.distance) {
       result = "Colder :(";
+    // or closer...
     } else {
       result = "Hotter!!!"
     }
-    // set the main distance to currentDistance
+    // store current distance for next round
     this.distance = currentDistance;
   // if it is the first guess provide some feedback
   } else {
