@@ -1,8 +1,8 @@
+'use strict'
 
 $(document).ready(function(){
   var userInput = document.getElementById('userGuess');
   var game = new Game();
-  console.log("The number to guess is: " + game.secretNumber);
 
 /*--- Display information modal box ---*/
   $(".what").click(function(){
@@ -16,7 +16,6 @@ $(document).ready(function(){
 
   $('.new').click(function() {
     game = new Game();
-    console.log("The number to guess is: " + game.secretNumber);
   });
 
   $('#guessButton').click(function(e) {
@@ -29,6 +28,7 @@ $(document).ready(function(){
     $('#userGuess').val('');
   });
 });
+
 
 function Game() {
   // set up a new game
