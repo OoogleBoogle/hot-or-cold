@@ -23,9 +23,9 @@ $(document).ready(function(){
     var userGuess = parseInt(userInput.value);
     var result = game.validateGuess(userGuess);
     $('#feedback').text(result);
-    $('#guessList').prepend('<li>' + game.currentGuess + '</li>');
+    $('#guessList').append('<li>' + game.currentGuess + '</li>');
     $('#count').text(game.totalGuesses);
-    $('#userGuess').val('');
+    $('#userGuess').focus().val('');
   });
 });
 
@@ -39,7 +39,7 @@ function Game() {
   $('#feedback').text('Make your Guess!');
   $('#count').text(this.totalGuesses);
   $('#guessList').html('');
-  $('#userGuess').val('').focus();
+  $('#userGuess').val('');
 }
 
 Game.prototype.validateGuess = function(guess) {
