@@ -108,8 +108,3 @@ Game.prototype.giveFeedback = function(guess) {
   }
   return result;
 }
-
-
-
-// if current distance is greater than previous distance then colder
-// else hotter
