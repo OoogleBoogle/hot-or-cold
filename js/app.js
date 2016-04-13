@@ -4,7 +4,7 @@ var game, player1, player2;
 function Game(player) {
     // set up a new game
     this.secretNumber = Math.floor(Math.random() * (100 - 1)) + 1;
-    console.log(this.secretNumber);
+    console.log("The first number is: ",this.secretNumber)
     this.currentPlayer = player;
     this.currentGuess = 0;
     this.totalGuesses = 0;
@@ -23,13 +23,16 @@ function Player(name, number) {
 
 var gameWon = function(game) { //maybe pass in the players?
     console.log("the game at the end: ", game)
-    if (game.currentPlayer === player1) {
-        game.currentPlayer = player2
-    }
-    if (game.currentPlayer === player2) {
-        game.currentPlayer = player1
+    if (game.currentPlayer.number === 1) {
+        game = new Game(player2);
+        console.log(game.currentPlayer);
+        console.log(game);
+    } else {
+        game = new Game(player1);
+        console.log(game.currentPlayer);
     }
     console.log("the second game: ", game)
+    console.log("The second number is: ",game.secretNumber);
 }
 
 Game.prototype.validateGuess = function(guess, game) {
@@ -42,18 +45,7 @@ Game.prototype.validateGuess = function(guess, game) {
         if (guess === this.secretNumber) {
             console.log("HELlOOOOO");
             result = "You Got It!!! The number was " + this.secretNumber;
-            // gameWon(game);
-            if (this.currentPlayer.number === 1) {
-                game = new Game(player2);
-                console.log(game.currentPlayer);
-                console.log(game);
-            } else {
-                game = new Game(player1);
-                console.log(game.currentPlayer);
-            }
-            // if (this.currentPlayer === player1) {
-            //     game = new Game()
-            // }
+            gameWon(game);
             // check its between 1 and 100 and if so process number
         } else if (guess >= 1 && guess <= 100) {
             result = this.giveFeedback(guess);
