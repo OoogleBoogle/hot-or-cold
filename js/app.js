@@ -1,10 +1,12 @@
 'use strict'
+var game, player1, player2;
 
 function Game(player1, player2) {
     // set up a new game
     this.secretNumber = Math.floor(Math.random() * (100 - 1)) + 1;
     console.log(this.secretNumber);
     this.currentPlayer = player1;
+
     this.currentGuess = 0;
     this.totalGuesses = 0;
     this.distance = 0;
@@ -21,23 +23,25 @@ function Player(name) {
     this.guessHistory;
 }
 
-var gameWon = function(game){
-    if(this.currentPlayer === player1) {
-        this.currentPlayer === player2
-    }
-    if(this.currentPlayer === player2) {
-        this.currentPlayer === player1
-    }
+var gameWon = function(game) { //maybe pass in the players?
     console.log("the game at the end: ", game)
+    if (game.currentPlayer === player1) {
+        game.currentPlayer = player2
+    }
+    if (game.currentPlayer === player2) {
+        game.currentPlayer = player1
+    }
+    console.log("the second game: ", game)
 }
 
-Game.prototype.validateGuess = function(guess) {
+Game.prototype.validateGuess = function(guess, game) {
     var result;
     // provided we have an actual number continue
     if (typeof guess === 'number') {
         // check if it's a correct guess early, and if so congratulate
         if (guess === this.secretNumber) {
             result = "You Got It!!! The number was " + this.secretNumber;
+            gameWon(game);
             // check its between 1 and 100 and if so process number
         } else if (guess >= 1 && guess <= 100) {
             result = this.giveFeedback(guess);
@@ -61,6 +65,7 @@ Game.prototype.giveFeedback = function(guess) {
     // check this isn't the first guess
     if (this.distance > 0) {
         var currentDistance = Math.abs(guess - this.secretNumber);
+
         // see if they've already guessed this
         $('#guessList li').each(function() {
             var prevGuess = parseInt($(this).text());
@@ -99,13 +104,13 @@ Game.prototype.giveFeedback = function(guess) {
 }
 
 $(document).ready(function() {
-    var player1 = new Player("Bob");
-    var player2 = new Player("Jane");
     var userInput = document.getElementById('userGuess');
-    var game = new Game(player1, player2);
+    player1 = new Player("Bob");
+    player2 = new Player("Jane");
+    game = new Game(player1, player2);
     console.log("the game at the start: ", game)
 
-    console.log("here are the players: ", player1.name + " "+ player2.name);
+    console.log("here are the players: ", player1.name + " " + player2.name);
 
     /*--- Display information modal box ---*/
     $(".what").click(function() {
@@ -124,7 +129,7 @@ $(document).ready(function() {
     $('#guessButton').click(function(e) {
         e.preventDefault();
         var userGuess = parseInt(userInput.value);
-        var result = game.validateGuess(userGuess);
+        var result = game.validateGuess(userGuess, game);
         $('#feedback').text(result);
         $('#guessList').append('<li>' + game.currentGuess + '</li>');
         $('#count').text(game.totalGuesses);
