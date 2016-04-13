@@ -1,12 +1,11 @@
 'use strict'
 var game, player1, player2;
 
-function Game(player1, player2) {
+function Game(player) {
     // set up a new game
     this.secretNumber = Math.floor(Math.random() * (100 - 1)) + 1;
     console.log(this.secretNumber);
-    this.currentPlayer = player1;
-
+    this.currentPlayer = player;
     this.currentGuess = 0;
     this.totalGuesses = 0;
     this.distance = 0;
@@ -16,11 +15,10 @@ function Game(player1, player2) {
     $('#userGuess').val('');
 }
 
-function Player(name) {
+function Player(name, number) {
     this.name = name;
     this.score = 0;
-    this.numGuesses;
-    this.guessHistory;
+    this.number = number;
 }
 
 var gameWon = function(game) { //maybe pass in the players?
@@ -38,10 +36,24 @@ Game.prototype.validateGuess = function(guess, game) {
     var result;
     // provided we have an actual number continue
     if (typeof guess === 'number') {
+        console.log(game);
+        console.log(this);
         // check if it's a correct guess early, and if so congratulate
         if (guess === this.secretNumber) {
+            console.log("HELlOOOOO");
             result = "You Got It!!! The number was " + this.secretNumber;
-            gameWon(game);
+            // gameWon(game);
+            if (this.currentPlayer.number === 1) {
+                game = new Game(player2);
+                console.log(game.currentPlayer);
+                console.log(game);
+            } else {
+                game = new Game(player1);
+                console.log(game.currentPlayer);
+            }
+            // if (this.currentPlayer === player1) {
+            //     game = new Game()
+            // }
             // check its between 1 and 100 and if so process number
         } else if (guess >= 1 && guess <= 100) {
             result = this.giveFeedback(guess);
@@ -105,9 +117,9 @@ Game.prototype.giveFeedback = function(guess) {
 
 $(document).ready(function() {
     var userInput = document.getElementById('userGuess');
-    player1 = new Player("Bob");
-    player2 = new Player("Jane");
-    game = new Game(player1, player2);
+    player1 = new Player("Bob", 1);
+    player2 = new Player("Jane", 2);
+    game = new Game(player1);
     console.log("the game at the start: ", game)
 
     console.log("here are the players: ", player1.name + " " + player2.name);
@@ -123,7 +135,7 @@ $(document).ready(function() {
     });
 
     $('.new').click(function() {
-        game = new Game();
+        game = new Game(player1);
     });
 
     $('#guessButton').click(function(e) {
