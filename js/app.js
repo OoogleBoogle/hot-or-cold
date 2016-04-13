@@ -108,3 +108,4 @@ Game.prototype.giveFeedback = function(guess) {
     }
     return result;
 }
+
