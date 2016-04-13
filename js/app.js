@@ -12,6 +12,13 @@ function Game() {
     $('#userGuess').val('');
 }
 
+function Player(name) {
+    this.name = name;
+    this.score = 0;
+    this.numGuesses;
+    this.guessHistory;
+}
+
 Game.prototype.validateGuess = function(guess) {
     var result;
     // provided we have an actual number continue
@@ -82,6 +89,10 @@ Game.prototype.giveFeedback = function(guess) {
 $(document).ready(function() {
     var userInput = document.getElementById('userGuess');
     var game = new Game();
+    var player1 = new Player("Bob");
+    var player2 = new Player("Jane");
+
+    console.log("here are the players: ", player1.name + " "+ player2.name);
 
     /*--- Display information modal box ---*/
     $(".what").click(function() {
