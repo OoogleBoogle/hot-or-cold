@@ -1,8 +1,9 @@
 'use strict'
 
-function Game() {
+function Game(player1, player2) {
     // set up a new game
     this.secretNumber = Math.floor(Math.random() * (100 - 1)) + 1;
+    this.currentPlayer = player1;
     this.currentGuess = 0;
     this.totalGuesses = 0;
     this.distance = 0;
@@ -26,6 +27,12 @@ Game.prototype.validateGuess = function(guess) {
         // check if it's a correct guess early, and if so congratulate
         if (guess === this.secretNumber) {
             result = "You Got It!!! The number was " + this.secretNumber;
+            if(this.currentPlayer === player1) {
+                this.currentPlayer === player2
+            }
+            if(this.currentPlayer === player2) {
+                this.currentPlayer === player1
+            }
             // check its between 1 and 100 and if so process number
         } else if (guess >= 1 && guess <= 100) {
             result = this.giveFeedback(guess);
@@ -83,14 +90,15 @@ Game.prototype.giveFeedback = function(guess) {
             result = "Meh...could be closer..."
         }
     }
+    console.log(this.currentPlayer);
     return result;
 }
 
 $(document).ready(function() {
-    var userInput = document.getElementById('userGuess');
-    var game = new Game();
     var player1 = new Player("Bob");
     var player2 = new Player("Jane");
+    var userInput = document.getElementById('userGuess');
+    var game = new Game(player1, player2);
 
     console.log("here are the players: ", player1.name + " "+ player2.name);
 
