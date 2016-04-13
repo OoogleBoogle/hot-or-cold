@@ -1,35 +1,5 @@
 'use strict'
 
-$(document).ready(function() {
-    var userInput = document.getElementById('userGuess');
-    var game = new Game();
-
-    /*--- Display information modal box ---*/
-    $(".what").click(function() {
-        $(".overlay").fadeIn(1000);
-    });
-
-    /*--- Hide information modal box ---*/
-    $("a.close").click(function() {
-        $(".overlay").fadeOut(1000);
-    });
-
-    $('.new').click(function() {
-        game = new Game();
-    });
-
-    $('#guessButton').click(function(e) {
-        e.preventDefault();
-        var userGuess = parseInt(userInput.value);
-        var result = game.validateGuess(userGuess);
-        $('#feedback').text(result);
-        $('#guessList').append('<li>' + game.currentGuess + '</li>');
-        $('#count').text(game.totalGuesses);
-        $('#userGuess').focus().val('');
-    });
-});
-
-
 function Game() {
     // set up a new game
     this.secretNumber = Math.floor(Math.random() * (100 - 1)) + 1;
@@ -109,3 +79,31 @@ Game.prototype.giveFeedback = function(guess) {
     return result;
 }
 
+$(document).ready(function() {
+    var userInput = document.getElementById('userGuess');
+    var game = new Game();
+
+    /*--- Display information modal box ---*/
+    $(".what").click(function() {
+        $(".overlay").fadeIn(1000);
+    });
+
+    /*--- Hide information modal box ---*/
+    $("a.close").click(function() {
+        $(".overlay").fadeOut(1000);
+    });
+
+    $('.new').click(function() {
+        game = new Game();
+    });
+
+    $('#guessButton').click(function(e) {
+        e.preventDefault();
+        var userGuess = parseInt(userInput.value);
+        var result = game.validateGuess(userGuess);
+        $('#feedback').text(result);
+        $('#guessList').append('<li>' + game.currentGuess + '</li>');
+        $('#count').text(game.totalGuesses);
+        $('#userGuess').focus().val('');
+    });
+});
