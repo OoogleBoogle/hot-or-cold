@@ -11,7 +11,7 @@
         this.currentGuess = "";
         this.totalGuesses = 0;
         this.distance = 0;
-        $('#feedback').text('Make your Guess!');
+        // $('#feedback').text(this.currentPlayer.name + " make your guess");
         $('#count').text(this.totalGuesses);
         $('#guessList').html('');
         $('#userGuess').val('');
@@ -43,27 +43,13 @@
         return result;
     }
 
-
-    // Game.prototype.validateGuess = function(guess) {
-    //     var result;
-    //         // check if it's a correct guess early, and if so congratulate
-    //         else 
-    //         // else say it's not a number
-        
-    //     // set current guess
-    //     
-    //     // update amount of guesses
-    //     
-    //     return result;
-    // }
-
     Game.prototype.giveFeedback = function(guess) {
         var result;
         // if it's correct...
         if (guess === this.secretNumber) {
             result = "You Got It!!! The number was " + this.secretNumber;
             addPlayerScore(this.currentPlayer, this.totalGuesses);
-            startNewRound(this);
+            startNewRound(this.currentPlayer);
         } 
         // check this isn't the first guess
         else if (this.distance > 0) {
@@ -106,24 +92,35 @@
     function addPlayerScore(player, totalGuesses) {
         if (player === player1) {
             player1.score += totalGuesses;
+            $('.player1 p').text(player1.score);
         } else {
             player2.score += totalGuesses;
+            $('.player2 p').text(player2.score);
         }
     }
 
-    function startNewRound(gameObj) {
-        if (gameObj.currentPlayer.number === 1) {
+    function startNewRound(player) {
+        if (player.number === 1) {
             game = new Game(player2);
+            $('.player1 h3').first().slideUp();
+            $('.player2 h3').first().slideDown();
         } else {
             game = new Game(player1);
+            $('.player1 h3').first().slideDown();
+            $('.player2 h3').first().slideUp();
         }
+        $('#feedback').text(" " + game.currentPlayer.name + " you're up!");
     }
 
     $(document).ready(function() {
         var userInput = document.getElementById('userGuess');
         player1 = new Player("Bob", 1);
         player2 = new Player("Jane", 2);
-        game = new Game(player1);
+        startNewRound(player2);
+ 
+        $('.player1 h1').text(player1.name);
+        $('.player2 h1').text(player2.name);
+
 
         /*--- Display information modal box ---*/
         $(".what").click(function() {
@@ -136,7 +133,7 @@
         });
 
         $('.new').click(function() {
-            game = new Game(player1);
+            startNewRound(game.currentPlayer);
         });
 
         $('#guessButton').click(function(e) {
@@ -147,9 +144,6 @@
             $('#guessList').append('<li>' + game.currentGuess + '</li>');
             $('#count').text(game.totalGuesses);
             $('#userGuess').focus().val('');
-            console.log('player: ', game.currentPlayer);
-            console.log('player1 score: ', player1.score);
-            console.log('player2 score: ', player2.score);
         });
     });
 })();

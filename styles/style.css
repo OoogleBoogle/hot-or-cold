@@ -167,6 +167,10 @@ h1 {
    Game Section Styles
 ---------------------------------------------------------------------------------*/
 
+.main-content {
+	display: flex;
+}
+
 .game {
 	position: relative;
 	background-color: #394264;
@@ -319,3 +323,49 @@ ul.guessBox li {
 	margin: 0.2em;
 	color: #fff;
 }
+
+/*================ Scorebox Styles =================*/
+
+.scores {
+	text-align: center;
+	margin: 0 auto;
+}
+
+.scores h3 {
+	font-size: 1.3em;
+	color: rgba(217, 234, 21, 0.86);
+}
+
+.scores p {
+	font-size: 2em;
+	padding-top: 0.8em;
+	color: #e74c3c;
+}
+
+.current-player {
+	text-shadow: 0px 0px 48.2px #BBCB1B;
+}
+
+.player2 > h3:first-child {
+	display: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

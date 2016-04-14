@@ -42,21 +42,35 @@
 			<h1>HOT or COLD</h1>
 
 		</header>
-		
-		<section class="game"> <!-- Guessing Section -->
-			<h2 id="feedback">Make your Guess!</h2>
-			<form>
-				<input type="text" name="userGuess" id="userGuess" class="text" maxlength="3" autocomplete="off" placeholder="Enter your Guess" required/>
-  				<input type="submit" id="guessButton" class="button" name="submit" value="Guess"/>
-			</form>
-			
-      		<p>Guess #<span id="count">0</span>!</p>
-			
-			<ul id="guessList" class="guessBox clearfix"></ul>
+		<section class="main-content">
+			<div class="player1 scores">
+				<h3>Current Player</h3>
+				<h1>Player Name</h1>
+				<h3>running total</h3>
+				<p></p>
+			</div>
 
+			<div class="game"> <!-- Guessing Section -->
+				<h2 id="feedback"></h2>
+				<form>
+					<input type="text" name="userGuess" id="userGuess" class="text" maxlength="3" autocomplete="off" placeholder="Enter your Guess" required/>
+	  				<input type="submit" id="guessButton" class="button" name="submit" value="Guess"/>
+				</form>
+				
+	      		<p>Guess #<span id="count">0</span>!</p>
+				
+				<ul id="guessList" class="guessBox clearfix"></ul>
+
+			</div>
+
+			<div class="player2 scores">
+				<h3>Current Player</h3>
+				<h1>Player Name</h1>
+				<h3>running total</h3>
+				<p></p>
+			</div>
 		</section>
 		<!-- JavaScript -->
-
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 		<script type="text/javascript" src="js/app.js"></script>
 	</body>
