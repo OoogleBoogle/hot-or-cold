@@ -36,16 +36,21 @@
     };
 
     Model.prototype.incrementPlayer = function(){
-            this.activePlayer += 1;
+        if (this.activePlayer >= this.playerList.length - 1) {
+            this.activePlayer = 0;
+        }
+        else {
+            this.activePlayer++;
+        }
     };
 
-    var Game = function(player) {
-        // set up a new game
-
-        $('#count').text(this.totalGuesses);
-        $('#guessList').html('');
-        $('#userGuess').val('');
-    };
+    // var Game = function(player) {
+    //     // set up a new game
+    //
+    //     $('#count').text(this.totalGuesses);
+    //     $('#guessList').html('');
+    //     $('#userGuess').val('');
+    // };
 
     // Game.prototype.validateGuess = function(guess) {
     //     var result;
@@ -143,8 +148,9 @@
         var model = new Model();
         var player1 = model.makePlayer("Bob");
         var player2 = model.makePlayer("Linda");
-        model.incrementPlayer();
         console.log("first log: ", model);
+        model.incrementPlayer();
+
         model.incrementPlayer();
         console.log("second log: ",model);
         var userInput = document.getElementById('userGuess');
