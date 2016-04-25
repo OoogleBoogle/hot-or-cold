@@ -1,44 +1,40 @@
 // Model
-    // All game related data
-        // current guess, guessList, playerCount, secretNumber, current player
-        // var model = new Model();
+// All game related data
+// current guess, guessList, playerCount, secretNumber, current player
+// var model = new Model();
 
 // View
-    // passes user input to model via controller
-    // displays data in model passed from controller
-    // display feedback dependent on info gatherd (via controller);
+// passes user input to model via controller
+// displays data in model passed from controller
+// display feedback dependent on info gatherd (via controller);
 
 // Controller
-    // takes user input passes to Model
-    // takes updated info from model and throws it at the view (Angrily Grrrr)
-    //var controller = new Controller(model,view)
+// takes user input passes to Model
+// takes updated info from model and throws it at the view (Angrily Grrrr)
+//var controller = new Controller(model,view)
 
 (function() {
     'use strict';
     var game, player1, player2;
 
-    var Player = function(name, number) {
-        this.name = name;
-        this.score = 0;
-        this.number = number;
-    }
-
-    var Game = function() {
+    var Model = function() {
         this.secretNumber = Math.floor(Math.random() * (100 - 1)) + 1;
         console.log(this.secretNumber);
-        this.currentPlayer = player;
+        // this.currentPlayer = player;
         this.currentGuess = "";
         this.guessList = [];
+        this.playerList = [];
         this.totalGuesses = 0;
         this.distance = 0;
-        this.players = [
-            {player1: "Bob", score: 0},
-            {player2: "Linda", score: 0}
-        ];
-    }
+    };
 
-    // makePlayer GAME-proto
-    // uses player constructor and appends new player to model
+    Model.prototype.makePlayer = function(name) {
+        var player = {};
+        player.name = name;
+        player.score = 0;
+        player.number = this.playerList.length + 1;
+        this.playerList.push(player);
+    };
 
     var Game = function(player) {
         // set up a new game
@@ -46,7 +42,7 @@
         $('#count').text(this.totalGuesses);
         $('#guessList').html('');
         $('#userGuess').val('');
-    }
+    };
 
     Game.prototype.validateGuess = function(guess) {
         var result;
@@ -67,7 +63,7 @@
         }
         return result;
     };
-    Game.prototype.addGuess = function(){
+    Game.prototype.addGuess = function() {
 
     };
 
@@ -137,10 +133,13 @@
             $('.player1 h3').first().slideDown();
             $('.player2 h3').first().slideUp();
         }
-        $('#feedback').text(" " + game.currentPlayer.name + " you're up!");
+        //$('#feedback').text(" " + game.currentPlayer.name + " you're up!");
     }
 
     $(document).ready(function() {
+        var model = new Model();
+        var testPlayer = model.makePlayer("Bob");
+        console.log(model.playerList);
         var userInput = document.getElementById('userGuess');
         player1 = new Player("Bob", 1);
         player2 = new Player("Jane", 2);
