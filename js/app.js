@@ -1,7 +1,12 @@
 (function() {
-
     'use strict';
     var game, player1, player2;
+
+    function Player(name, number) {
+        this.name = name;
+        this.score = 0;
+        this.number = number;
+    }
 
     function Game(player) {
         // set up a new game
@@ -14,12 +19,6 @@
         $('#count').text(this.totalGuesses);
         $('#guessList').html('');
         $('#userGuess').val('');
-    }
-
-    function Player(name, number) {
-        this.name = name;
-        this.score = 0;
-        this.number = number;
     }
 
     Game.prototype.validateGuess = function(guess) {
