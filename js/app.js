@@ -1,3 +1,18 @@
+// Model
+    // All game related data
+        // current guess, guessList, playerCount, secretNumber, current player
+        // var model = new Model();
+
+// View
+    // passes user input to model via controller
+    // displays data in model passed from controller
+    // display feedback dependent on info gatherd (via controller);
+
+// Controller
+    // takes user input passes to Model
+    // takes updated info from model and throws it at the view (Angrily Grrrr)
+    //var controller = new Controller(model,view)
+
 (function() {
     'use strict';
     var game, player1, player2;
@@ -8,14 +23,26 @@
         this.number = number;
     }
 
-    var Game = function (player) {
-        // set up a new game
+    var Game = function() {
         this.secretNumber = Math.floor(Math.random() * (100 - 1)) + 1;
         console.log(this.secretNumber);
         this.currentPlayer = player;
         this.currentGuess = "";
+        this.guessList = [];
         this.totalGuesses = 0;
         this.distance = 0;
+        this.players = [
+            {player1: "Bob", score: 0},
+            {player2: "Linda", score: 0}
+        ];
+    }
+
+    // makePlayer GAME-proto
+    // uses player constructor and appends new player to model
+
+    var Game = function(player) {
+        // set up a new game
+
         $('#count').text(this.totalGuesses);
         $('#guessList').html('');
         $('#userGuess').val('');
@@ -39,6 +66,9 @@
             result = "That's not even a number";
         }
         return result;
+    };
+    Game.prototype.addGuess = function(){
+
     };
 
     Game.prototype.giveFeedback = function(guess) {
