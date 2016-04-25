@@ -44,6 +44,15 @@
         }
     };
 
+    Model.prototype.validateCurrentGuess = function(guess) {
+        // check it's a number
+        // check it's between 1 & 100
+        if (isNaN(guess) || (guess < 1 || guess > 100)) {
+            alert("no");
+        }
+        return true;
+    };
+
     // var Game = function(player) {
     //     // set up a new game
     //
@@ -148,11 +157,8 @@
         var model = new Model();
         var player1 = model.makePlayer("Bob");
         var player2 = model.makePlayer("Linda");
-        console.log("first log: ", model);
-        model.incrementPlayer();
-
-        model.incrementPlayer();
-        console.log("second log: ",model);
+        model.validateCurrentGuess(40);
+        // model.validateCurrentGuess(1);
         var userInput = document.getElementById('userGuess');
         startNewRound(player2);
 
