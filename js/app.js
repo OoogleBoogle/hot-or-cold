@@ -1,6 +1,6 @@
 (function() {
 
-    'use strict'
+    'use strict';
     var game, player1, player2;
 
     function Game(player) {
@@ -11,7 +11,6 @@
         this.currentGuess = "";
         this.totalGuesses = 0;
         this.distance = 0;
-        // $('#feedback').text(this.currentPlayer.name + " make your guess");
         $('#count').text(this.totalGuesses);
         $('#guessList').html('');
         $('#userGuess').val('');
@@ -22,7 +21,7 @@
         this.score = 0;
         this.number = number;
     }
-    
+
     Game.prototype.validateGuess = function(guess) {
         var result;
         this.totalGuesses++;
@@ -31,9 +30,9 @@
         if (typeof guess === 'number') {
             // if number is between 1 & 100
             if (guess >= 1 && guess <= 100) {
-                //result = 
+                //result =
                 result = this.giveFeedback(guess);
-            // else say so
+                // else say so
             } else {
                 result = "Your guess needs to be between 1 and 100";
             }
@@ -41,7 +40,7 @@
             result = "That's not even a number";
         }
         return result;
-    }
+    };
 
     Game.prototype.giveFeedback = function(guess) {
         var result;
@@ -50,7 +49,7 @@
             result = "You Got It!!! The number was " + this.secretNumber;
             addPlayerScore(this.currentPlayer, this.totalGuesses);
             startNewRound(this.currentPlayer);
-        } 
+        }
         // check this isn't the first guess
         else if (this.distance > 0) {
             // and see if they've already guessed this number before
@@ -65,29 +64,29 @@
             var currentDistance = Math.abs(guess - this.secretNumber);
             // if they're equidistant from the answer to their previous guess
             if (currentDistance === this.distance) {
-                result = "OOOO! Equidistant!!!"
-            // else if further away...
+                result = "OOOO! Equidistant!!!";
+                // else if further away...
             } else if (currentDistance > this.distance) {
                 result = "Colder :(";
-            // or closer...
+                // or closer...
             } else {
-                result = "Hotter!!!"
+                result = "Hotter!!!";
             }
             // store current distance for next round
             this.distance = currentDistance;
-        // if it is the first guess provide some feedback
+            // if it is the first guess provide some feedback
         } else {
             this.distance = Math.abs(guess - this.secretNumber);
             if (this.distance >= 1 && this.distance <= 10) {
                 result = "That's damn close!";
             } else if (this.distance >= 11 && this.distance <= 20) {
-                result = "That's kinda close..."
+                result = "That's kinda close...";
             } else {
-                result = "Yeahhhh...Miles away"
+                result = "Yeahhhh...Miles away";
             }
         }
         return result;
-    }
+    };
 
     function addPlayerScore(player, totalGuesses) {
         if (player === player1) {
@@ -117,7 +116,7 @@
         player1 = new Player("Bob", 1);
         player2 = new Player("Jane", 2);
         startNewRound(player2);
- 
+
         $('.player1 h1').text(player1.name);
         $('.player2 h1').text(player2.name);
 
