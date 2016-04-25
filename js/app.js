@@ -2,13 +2,13 @@
     'use strict';
     var game, player1, player2;
 
-    function Player(name, number) {
+    var Player = function(name, number) {
         this.name = name;
         this.score = 0;
         this.number = number;
     }
 
-    function Game(player) {
+    var Game = function (player) {
         // set up a new game
         this.secretNumber = Math.floor(Math.random() * (100 - 1)) + 1;
         console.log(this.secretNumber);
